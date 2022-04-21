@@ -1,0 +1,30 @@
+{% extends "layout.html" %} {% block title %} User_main {% endblock %} 
+{% block main %}
+    <center>
+        <p class="head3 m-0 mt-3">
+            ชื่อ-นามสกุล: {{username[0]}} {{username[1]}} {{username[2]}}
+        </p>
+        <a class="head4 m-0 underline" href="/user_detail">รายละเอียดบัญชี</a>
+        <hr class="spliter1 mt-1 mx-0" />
+    </center>
+  <center>
+    <div class="head2 mt-4 mb-1">รถของคุณ</div>
+    <hr class="spliter2 mt-1 mx-0" />
+    {% if cars != None %} {% for car in cars %}
+    <a href="/user_insurance/{{car[4]}}">
+      <div class="box3 board2 m-2 rounded1" >
+        <div class="box6 locate1" style="display: inline-block;">
+          <span class="head5"> รถ: {{car[0]}} {{car[1]}} </span>
+        </div>
+        <div class="box7 locate1" style="display: inline-block;">
+          <span class="head5"> ทะเบียนรถ: {{car[2]}} </span>
+        </div>
+        <div class="box8 locate1" style="display: inline-block;">
+          <span class="head5"> ครั้งล่าสุด: {{car[3]}} </span>
+        </div>
+      </div>
+    </a>
+    {% endfor %} {% endif %}
+  </center>
+  <div style="margin-bottom: 50px;"></div>
+{% endblock %}

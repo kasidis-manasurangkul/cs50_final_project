@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class= "container">
+        <div class= "row">
+            <div class= "col-sm-12 mt-4">
+                <center>
+                    <p class= "head1 underline">เข้าสู่ระบบ</p>
+                <center>
+            </div>
+        </div>
+        <div class= "row" style="margin-bottom: 180px;">
+            <div class= "box1 board1 rounded px-3" style="margin-top: 90px;">
+                <div>
+                    <p class="head7 mt-3 mb-3" style="margin-left: 10px;">เข้าสู่ระบบของคุณ</p>
+                </div>
+                <form action="/login" method="post">
+                    <div class="input-group mb-0 formbox1">
+                        <input type="text" class="form-control head6" required="required" name="username" placeholder="เบอร์โทรศัพท์" aria-label="เบอร์โทรศัพท์">
+                    </div>
+                    
+                    <div class="input-group mb-2 formbox1">
+                        <input type="password" class="form-control head6" required="required" name= "password" placeholder="นามสกุล" aria-label="นามสกุล">
+                    </div>
+                    <button type="submit" class="btn color-custom mt-2 mb-1 formbox2 head8">เข้าสู่ระบบ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

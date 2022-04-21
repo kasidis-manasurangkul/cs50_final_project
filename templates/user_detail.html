@@ -1,0 +1,57 @@
+{% extends "layout2.html" %}
+
+{% block title %}
+    user_detail
+{% endblock %}
+{% block head %}
+    รายละเอียดบัญชี
+{% endblock %}
+
+{% block main %}
+    <div>
+        <div class= "box4" style="display: inline-block;">
+            <p class = "head8">รายละเอียดบัญชี</p>
+        </div>
+        <div class= "box5" style="display: inline-block;">
+            <p class = "head8 mb-2">ชื่อ: {{user[0]}}  นามสกุล: {{user[1]}}</p>
+            <p class = "head8 mb-2">เบอร์โทรศัทพ์: {{user[2]}}</p>
+            <p class = "head8 mb-0">อีเมล: {{user[3]}}</p>
+        </div>
+    </div>
+    <hr class= "spliter1 my-0">
+    <div>
+        <div class= "box4" style="display: inline-block;">
+            <p class = "head8">เพิ่มอีเมล/เปลี่ยนอีเมล</p>
+        </div>
+        <div class= "box5" style="display: inline-block;">
+            <form action="/user_detail/change_email" method="post">
+                <div class="mb-0">
+                    <input type="text" class="head6 formbox3 board3 pl-1" name="email" placeholder="อีเมล" aria-label="อีเมล">
+                </div>
+                <button type="submit" name="email_button" class="btn color-custom mt-3 mb-2 formbox4 head9 rounded2">เรียบร้อย</button>
+            </form>
+        </div>
+    </div>
+    <hr class= "spliter1 my-0">    
+    <div>
+        <div class= "box4" style="display: inline-block;">
+            <p class = "head8">เปลี่ยนรหัสผ่าน</p>
+        </div>
+        <div class= "box5" style="display: inline-block;">
+            <form action="/user_detail/change_password" method="post">
+                <div class="mb-2">
+                    <input type="password" class="head6 formbox3 board3 pl-1" name="password" placeholder="รหัสผ่านเก่า" aria-label="อีเมล">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="head6 formbox3 board3 pl-1" name="new_password" placeholder="รหัสผ่านใหม่" aria-label="อีเมล">
+                </div>
+                <div class="mb-0">
+                    <input type="password" class="head6 formbox3 board3 pl-1" name="password_confirmation" placeholder="ยืนยันอีกครั้ง" aria-label="อีเมล">
+                </div>
+                <button type="submit" name="password_button" class="btn color-custom mt-3 mb-2 formbox4 head9 rounded2">เรียบร้อย</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

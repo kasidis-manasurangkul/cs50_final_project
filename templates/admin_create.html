@@ -1,0 +1,181 @@
+{% extends "layout4.html" %} {% block title %} admin_create{% endblock %}
+{% block head %} {% endblock %}
+{% block main %}
+<div class="tab">
+    <button class="tablinks" name="user_tab">ผู้เอาประกันและรถยนต์</button>
+    <button class="tablinks" name="insurance_tab" >รายละเอียดประกันภัย</button>
+</div>
+<div class="tabcontent" id="username_car">
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">รายละเอียดผู้เอาประกัน</p>
+    </div>
+    <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important;">
+        <div id="user">
+            <label class="head10">คำนำหน้า:</label>
+            <input class="head13" style="border: 0.5px!;" id="name_title" type="text" autofocus
+                placeholder="เปลี่ยนคำหน้า"><br>
+            <label class="head10" style="margin-right: 5px;">ชื่อ:</label>
+            <input class="head13" id="first_name" type="text" placeholder="เปลี่ยนชื่อ"><br>
+            <label class="head10">นามสกุล:</label>
+            <input class="head13" id="last_name" type="text" placeholder="เปลี่ยนนามสกุล"><br>
+            <label class="head10">code:</label>
+            <input class="head13" id="code" type="text" placeholder="เปลี่ยนcode"><br>
+            <label class="head10">เบอร์โทรศัพท์: </label>
+            <input class="head13" id="phone_number" type="text" placeholder="เปลี่ยนเบอร์โทรศัพท์"><br>
+            <label class="head10">อีเมล:</label>
+            <input class="head13" id="e_mail" type="text" placeholder="เปลี่ยนอีเมล"><br>
+            <label class="head10">username:</label>
+            <input class="head13" id="username" type="text" placeholder="เปลี่ยนusername"><br>
+            <label class="head10">password:</label>
+            <input class="head13" id="hash_password" type="text" placeholder="เปลี่ยนpassword"><br>
+        </div>
+    </div>
+    <hr class="spliter1 my-0">
+
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">รายละเอียดรถ</p>
+    </div>
+    <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important;">
+        <div id="parent_car">
+            <div id="car_creating" name="car" class="select_car">
+                <label style="margin-right: 5px;" class="head10">ยี่ห้อ:</label>
+                <input class="head13" style="border: 0.5px!;" name="brand" type="text" placeholder="เปลี่ยนยี่ห้อ">
+                <img src="/static/4105964-collapse-minus-reduce-remove_113927.png" class="img11" style="position:absolute; margin-top: 8px; margin-left: -328px;"
+                    onclick="del_clone('')">
+                <br>
+                <label class="head10" style="margin-right: 5px;">รุ่น:</label>
+                <input class="head13" name="model" type="text" placeholder="เปลี่ยนรุ่น"><br>
+                <label style="margin-right: 5px;" class="head10">เลขทะเบียนรถ:</label>
+                <input class="head13" name="license_number" type="text" placeholder="เปลี่ยนเลขทะเบียนรถ"><br>
+                <br>
+            </div>
+            <img class="img11" onclick="del_clone('1');" src="/static/4105964-collapse-minus-reduce-remove_113927.png" style="position: absolute; margin-top: 8px; margin-left: -328px;">
+        </div>
+        <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: -30px; margin-left: 324px;"
+            onclick="clone('parent_car','car_creating')">
+    </div>
+    <div style="text-align: right;">
+        <button class="btn color-custom formbox5 head8 rounded2" type="button" style="margin-right: 5px; width: 128px; margin-bottom: 10px; display: inline-block;" onclick="get_user_car(); openCity('insurance_tab', 'insurance'); show_form('insurance');">หน้าต่อไป</button>
+    </div>
+</div>
+
+<div class="tabcontent" id="insurance" name="spliter">
+    <div style="display: inline-block;">
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รายละเอียดประกันภัย</p>
+        </div>
+        <div class="box5" style="display: inline-block; width: 600px;">
+            <div style="display: inline-block;" id="insurance_form" name ='insurance'>
+                
+            </div>
+        </div>
+        <!-- <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: -30px; margin-left: 717px;"
+            onclick="insurance_clone('parent_insurance','insurance_creating')"> -->
+    </div>
+    <div style="text-align: right;">
+        <button class="btn color-custom formbox5 head8 rounded2" type="button"
+            style="margin-right: 5px; width: 128px; margin-bottom: 10px; display: inline-block;"
+            onclick="openCity('user_tab', 'username_car');">ย้อนกลับ</button>
+        <button class="btn color-custom formbox5 head8 rounded2" type="button"
+            style="margin-right: 5px; width: 128px; margin-bottom: 10px; display: inline-block;"
+            onclick="get_insurance();">บันทึก</button>
+    </div>
+</div>
+
+<!-- <div class="tabcontent" id="payment" name="spliter">
+    <div style="display: inline-block;">
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รถยนต์ของผู้เอาประกัน</p>
+        </div>
+        <div class="box5" style="display: inline-block; width: 620px;" id="parent_payment">
+            <div style="display: inline-block;" id="payment_creating" name='payment'>
+                <label class="head10">รถที่ทำประกัน:</label>
+                <div class="select_insurance"  id="select_insurance"></div>
+                <hr class="spliter7">
+                <label class="head10">ชื่อผู้โอน:</label>
+                <input required="required" class="head13" style="border: 0.5px!;" name="tranfer_name" type="text" autofocus
+                    placeholder="เปลี่ยนชื่อผู้โอน"><br>
+                <label class="head10" style="margin-right: 5px;">ธนาคารที่โอนเข้า:</label>
+                <input required="required" class="head13" name="bank_account" type="text" autofocus
+                    placeholder="เปลี่ยนธนาคารที่โอนเข้า"><br>
+                <label class="head10">จำนวนเงินที่โอน:</label>
+                <input required="required" class="head13" name="payment_amount" type="text" autofocus
+                    placeholder="เปลี่ยนจำนวนเงินที่โอน"><br>
+                <label class="head10">วันที่โอน:</label>
+                <input required="required" class="head13" name="pay_date" type="text" autofocus placeholder="เปลี่ยนวันที่โอน"><br>
+                <div class="head10" style="margin-bottom: 20px;">
+                    <span>หลักฐานการโอนเงิน:</span>
+                    <input required="required" type="file" name="confirm_payment" id="realfilecreate" hidden>
+                    <button type="button" class="btn color-custom formbox7 head6 rounded2" style="width: 123px;" id="customfilecreate"
+                        onclick="file('create')">เปลี่ยนไฟล์...</button>
+                    <span style="vertical-align: bottom; margin-left: 2px;" id="customlabelcreate">(ยังไม่มีไฟล์ใดถูกเปลี่ยน)</span>
+                    <br>
+                    <img class="img8" style="max-width:70% !important;" src="" id="previewcreate">
+                </div>
+            </div>
+        </div>
+        <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: -30px; margin-left: 717px;"
+            onclick="payment_clone('parent_payment','payment_creating')">
+    </div>
+    <div style="text-align: right;">
+        <button class="btn color-custom formbox5 head8 rounded2" type="button"
+            style="margin-right: 5px; width: 128px; margin-bottom: 10px; display: inline-block;"
+            onclick="get_payment();">หน้าต่อไป</button>
+    </div>
+</div> -->
+
+<script>
+    // window.addEventListener('load', (event) => {
+    //         car_selection()
+    //     });
+    openCity('user_tab', 'username_car')
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+            localStorage.removeItem("form");
+        }
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace("active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        document.getElementsByName(evt)[0].className += " active";
+    }
+    function file(id) {
+        let realfile_id = "realfile" + id;
+        let customfile_id = "customfile" + id;
+        let customlable_id = "customlabel" + id;
+        let preview_id = "preview" + id;
+
+        const realfile = document.getElementById(realfile_id);
+        const customfile = document.getElementById(customfile_id);
+        const customlabel = document.getElementById(customlable_id);
+        const preview = document.getElementById(preview_id);
+        realfile.click();
+
+        realfile.addEventListener('change', function () {
+            const file = realfile.files[0];
+            console.log(file)
+            if (realfile.value) {
+                customlabel.innerHTML = realfile.value.match(
+                    /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                )[1];
+                const reader = new FileReader();
+                reader.addEventListener('load', function () {
+                    preview.setAttribute("src", this.result);
+                })
+
+                reader.readAsDataURL(file);
+            }
+
+            else {
+                customlabel.innerHTML = "(ยังไม่มีไฟล์ใดถูกเปลี่ยน)";
+            }
+        })
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,282 @@
+{% extends "layout4.html" %}
+
+{% block title %}
+admin_importation
+{% endblock %}
+
+{% block main %}
+<div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+    <span class="head3" style="vertical-align: middle; ">นำเข้าข้อมูล</span>
+</div>
+<hr class="spliter1 my-0">
+<div class="box31">
+    <div style="display: inline-block; text-align: right;">
+        <div style="line-height: 50px;">
+            <label class="head10">แจ้งเตือนต่อประกัน:</label>
+        </div>
+        <div style="line-height: 50px;">
+            <label class="head10">ข้อมมูลต่อประกันประจำเดือน:</label>
+        </div>
+    </div>
+    <div style="display: inline-block;">
+        <div style="line-height: 50px;">
+            <input required="required" type="file" name="filename" id="real_file1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+            <button type="button" style="margin-bottom: 18px;" class="btn color-custom formbox7 head6 rounded2" id="custom_file1">เพิ่มไฟล์...</button>
+            <span style="vertical-align: bottom; margin-left: 2px;" id="custom_label1">(ไม่มีไฟล์ถูกเลือก)</span>
+        </div>
+        <div style="line-height: 50px;">
+            <input required="required" type="file" name="filename" id="real_file2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+            <button type="button" style="margin-bottom: 5px;" class="btn color-custom formbox7 head6 rounded2" id="custom_file2">เพิ่มไฟล์...</button>
+            <span style="vertical-align: bottom; margin-top: 2px; margin-left: 2px;" id="custom_label2">(ไม่มีไฟล์ถูกเลือก)</span>
+        </div>
+    </div>
+</div>
+<hr class="spliter1 my-0">
+<div style="margin-bottom: 20px;">
+    <div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+        <span class="head2" style="vertical-align: middle; ">รายการแจ้งเตือนต่อประกัน</span>
+    </div>
+    <div id="notification">
+        <div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+            <span class="head9" style="vertical-align: middle; color: #727272;">------ยังไม่มีข้อมูล------</span>
+        </div>
+    </div>
+</div>
+<hr class="spliter1 my-0">
+<div style="margin-bottom: 20px;">
+    <div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+        <span class="head2" style="vertical-align: middle; ">รายการข้อมมูลต่อประกันประจำเดือน</span>
+    </div>
+    <div id="verification">
+        <div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+            <span class="head9" style="vertical-align: middle; color: #727272;">------ยังไม่มีข้อมูล------</span>
+        </div>
+    </div>
+</div>
+<hr class="spliter1 my-0">
+<div style="margin-bottom:20px;"></div>
+<script>
+    window.addEventListener('load', (event) => {
+            button1()
+            button2()
+        });
+    const realfile1 = document.getElementById("real_file1");
+    const customfile1 = document.getElementById("custom_file1");
+    const customlabel1 = document.getElementById("custom_label1");
+    const realfile2 = document.getElementById("real_file2");
+    const customfile2 = document.getElementById("custom_file2");
+    const customlabel2 = document.getElementById("custom_label2");
+    console.log(customlabel1)
+
+    customfile1.addEventListener("click", function () {
+        realfile1.click();
+    });
+    customfile2.addEventListener("click", function () {
+        realfile2.click();
+    });
+    function button1 (){
+        realfile1.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file.name) {
+                customlabel1.innerHTML = file.name
+                if (typeof (FileReader) != "undefined") {
+                    console.log(file)
+                    const reader = new FileReader();
+
+                    reader.readAsBinaryString(file);
+                    reader.onload = async (e) => {
+                        console.log('e: ', e);
+                        const binaryString = e.target.result;
+                        const wb = XLSX.read(binaryString, { type: 'binary' });
+
+                        const wsname = wb.SheetNames[0];
+                        const ws = wb.Sheets[wsname];
+
+                        const data = XLSX.utils.sheet_to_json(ws, { raw: false }).filter(row=>{
+                            return row['ลำดับ']
+                        }).map((row) => {
+                            return {
+                                no: row['ลำดับ'],
+                                code: row['Code'],
+                                effective_date: row['วันที่คุ้มครอง'],
+                                title_name: row['คำนำหน้า'],
+                                first_name: row['ชื่อ'],
+                                last_name: row['นามสกุล'],
+                                brand: row['ยี่ห้อ'],
+                                model: row['รุ่นรถ'],
+                                license_number: row['ทะเบียน'],
+                                type: row['ประเภท'],
+                                sum_insure: row['ทุน'],
+                                price: row['เบี้ยประกัน'],
+                                discount: row['ส่วนลด'],
+                                act: row['พรบ.'],
+                                payment_method: row['ชำระโดย'],
+                                pay_date: row['จ่ายครบ']
+                            }
+                        });
+                        console.log(data)
+                    };
+                } 
+                else {
+                    alert("This browser does not support HTML5.");
+                } 
+            }
+            else {
+                customlabel1.innerHTML = "(ไม่มีไฟล์ถูกเลือก)";
+            }
+        });
+    }
+    function button2 (){
+        realfile2.addEventListener("change", async function () {
+            const file2 = this.files[0];
+            if (file2.name) {
+                customlabel2.innerHTML = file2.name
+                if (typeof (FileReader) != "undefined") {
+                    console.log(file2)
+                    const reader2 = new FileReader();
+
+                    reader2.readAsBinaryString(file2);
+                    reader2.onload = async (e) => {
+                        console.log('e: ', e);
+                        const binaryString2 = e.target.result;
+                        const wb2 = XLSX.read(binaryString2, { type: 'binary' });
+
+                        const wsname2 = wb2.SheetNames[0];
+                        const ws2 = wb2.Sheets[wsname2];
+
+                        const data2 = XLSX.utils.sheet_to_json(ws2, { raw: false }).filter(row => {
+                            return row['ลำดับ']
+                        }).map((row) => {
+                            return {
+                                no: row['ลำดับ'],
+                                code: row['Code'],
+                                effective_date: row['วันที่คุ้มครอง'],
+                                title_name: row['คำนำหน้า'],
+                                first_name: row['ชื่อ'],
+                                last_name: row['นามสกุล'],
+                                brand: row['ยี่ห้อ'],
+                                model: row['รุ่นรถ'],
+                                license_number: row['ทะเบียน'],
+                                type: row['ประเภท'],
+                                sum_insure: row['ทุน'],
+                                price: row['เบี้ยประกัน'],
+                                discount: row['ส่วนลด'],
+                                act: row['พรบ.'],
+                                payment_method: row['ชำระโดย'],
+                                pay_date: row['จ่ายครบ']
+                            }
+                        });
+                        const data_base = await get_data_base()
+                        verification_data_comparision(data2,data_base)
+                    };
+                }
+                else {
+                    alert("This browser does not support HTML5.");
+                }
+            }
+            else {
+                customlabel1.innerHTML = "(ไม่มีไฟล์ถูกเลือก)";
+            }
+        });
+    }
+    async function get_data_base() {
+        try {
+            const { data } = await axios.get("/get_data_base");
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    function verification_data_comparision(new_data, data_base) {
+        var dv = document.getElementById("verification");
+        var new_members = [];
+        var new_cars = [];
+        var isnmembers = false;
+        var isncars = false;
+        var isnacts = false;
+        var isninsurances = false;
+        var buy_online = []
+        var carry_out = []
+        var buy_late = []
+        console.log(data_base)
+        console.log(new_data)
+        for (let i = 0; i < new_data.length; i++) {
+            var new_row = new_data[i];
+            console.log(new_row)
+            new_name = new_row.first_name.trim() + " " + new_row.last_name.trim()
+            new_car = new_row.license_number.trim()
+            new_insurance_type = new_row.type.trim()
+            new_insurance_act = new_row.act.trim()
+            new_insurance_date = new_row.effective_date.trim()
+            for (let j = 0; j < data_base.length; j++) {
+                database_name = data_base[j][6].trim() + " " + data_base[j][7].trim()
+                database_car = data_base[j][10].trim()
+                database_insurance_type = data_base[j][11].trim()
+                database_insurance_date = data_base[j][4].trim()
+                database_insurance_status = data_base[j][15].trim()
+                console.log(database_name)
+                if (new_name == database_name) {
+                    isnmembers = true;
+                    if (new_car == database) {
+                        isncars = true;
+                        if (database_insurance_type == 'พรบ.') {
+                            if (new_insurance_act == undefined) {
+                                isnacts = null
+                            }
+                            if (new_insurance_act != undefined && new_insurance_date == database_insurance_date) {
+                                isnacts = true;
+                                if (database_insurance_status == '1'){
+                                    buy_online.push(new_row)
+                                }
+                                else if (database_insurance_status == '0'){
+                                    carry_out.push(new_row)
+                                }
+                                if (database_insurance_status == '-1'){
+                                    buy_late.push(new_row)
+                                }
+                            }
+                        }
+                        else {
+                            if (new_insurance_type == undefined) {
+                                isninsurances = null
+                            }
+                            if (new_insurance_type == new_insurance_type && new_insurance_date == database_insurance_date) {
+                                isninsurances = true;
+                                if (database_insurance_status == '1') {
+                                    insurance_status = 'bo'
+                                }
+                                else if (database_insurance_status == '0') {
+                                    insurance_status = 'co'
+                                }
+                                if (database_insurance_status == '-1') {
+                                    insurance_status = 'bl'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if(isnmembers == false) {
+                new_members.push(new_row)
+            }
+            if(isncars == false) {
+                new_cars.push(new_row)
+            }
+            if(isacts == false) {
+                new_members.push(new_row)
+            }
+            if(isninsurances == false) {
+                new_members.push(new_row)
+            }
+
+            isnmembers = false
+            isncars = false
+            isnacts = false
+            isninsurances = false
+            console.log(new_name)
+        }
+        console.log(new_members)
+        console.log(new_cars)
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout4.html" %} {% block title %} user_confirm {% endblock %}
+{% block head %} {% endblock %}
+{% block main %}
+
+<div class="box15" style="margin-left: auto; margin-right: auto; text-align: center; height: 70px !important;">
+    <span class="head3" style="vertical-align: middle; ">รายการแจ้งเตือน</span>
+</div>
+<hr class="spliter1 my-0">
+<div style="background-color: white; width: 990px;">
+    <div class="box26">
+        <div style="display:inline-block; margin-left: 10px;">
+            <label class="head10">เรียงตาม:</label>
+            <select id="sort" class="formbox10 navbar-custom2 head6" onclick="sort_customer_notification(value)">
+                <option value="latest">ล่าสุด</option>
+                <option value="name">ชื่อ</option>
+                <option value="renew_date">วันต่ออายุ</option>
+            </select>
+        </div>
+        <div style="display:inline-block; margin-left: 10px;">
+            <input type="text" autocomplete="off" class="formbox11 head6"
+                placeholder="ค้นหา ขื่อผู้เอาประกัน หรือ เลขทะเบียนรถ" id="search">
+        </div>
+    </div>
+</div>
+
+
+<div style="margin-bottom: 2000px; text-align: center;" id="customer">
+
+</div>
+<script>
+    window.addEventListener('load', (event) => {
+        get_customer_notification('insurance')
+        search_notification()
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "layout3.html" %} {% block title %} user_insurance {% endblock %} 
+{% block main %}
+
+    <center>
+        
+      <div class="box15" style="display: inline-block;">
+        <div class="box16" style="display: inline-block;">
+          <span class="head3" style="vertical-align: middle;">ประกันภัยของคุณ</span>
+        </div>
+        <span id= "open">
+          <div class="box17" style="display: inline-block; position: relative;">
+            <img class="img3" src="/static/bag_buy_cart_market_shop_shopping_tote_icon_123191.png">
+            <div class="circle1" style="vertical-align: middle; padding-bottom: 5px;">
+            <span id="insurance_cart" class="headtext"></span>
+            </div>
+          </div>
+        </span>
+        <div class="modal-container" id="modal_container">
+          <div class="outmodal1" id="close2"></div>
+          <div style="position: absolute;">
+            <div class="modal1" style="text-align: left;">
+                <span class="head5">ตระกร้า</span>
+                <img class="img4" src="/static/windowclose_104378.png" id="close1">
+                <hr class="spliter3">
+                <div id="product">
+
+                </div>
+                <div id="total">
+
+                </div>
+                <a href="/user_renew">
+                    <button type="button" class="btn color-custom formbox6 head8 rounded2">ชำระเงิน</button>
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+        <hr class="spliter1 mt-1 mx-0" />
+    </center>
+  <center>
+    <div class= "box13"style="display: inline-block;">
+      <div class="box14" style="display: inline-block; margin-right: 80px; text-align: left;">
+        <span class= "head2 underline">{{name[0]}} {{name[1]}}</span>
+      </div>
+      <div class="box14" style="display: inline-block; margin-left: 80px; margin-top: 5px; text-align: right;">
+        <a class= "head4 underline" href="/user_history/{{ insurances[0][5] }}" onclick="h({{histories}})">ประวัติการต่ออายุ</a>
+      </div>
+    </div>  
+
+    {% if cars != None %} {% for insurance in insurances %}
+      <div class="box9 board2 m-2 rounded1" >
+        <div class="box10 locate2" style="display: inline-block;">
+          <span class="head10"> ประเภท: {{insurance[0]}} </span>
+          <br>
+          <span class="head10"> เบี้ยประกัน: {{insurance[2] | baht}}</span>
+          <br>
+          <span class="head10"> ส่วนลด: {% if insurance[4] != 0 %}{{insurance[4] | baht}}{% endif %}</span>
+        </div>
+        <div class="box11 locate2" style="display: inline-block;">
+          <span class="head10"> ทุนประกัน: {{insurance[1] | baht}}</span>
+          <br>
+          <span class="head10"> ครอบรอบตัวประกัน: {{insurance[3]}}</span>
+          <br>
+          <span class="head10 font-weight-bold"> ยอดชำระ: {{(insurance[2] - insurance[4]) | baht}}</span>
+        </div>
+        <div class="box12" style="display: inline-block;">
+            <button type="button" class="btn color-custom formbox5 head7 rounded2" onclick="addcart(car_id = {{ insurance[5] }},
+                                                                                                    id = {{ insurance[6] }},
+                                                                                                    type = '{{ insurance[0] }}',
+                                                                                                    effective_date = '{{ insurance[3] }}',
+                                                                                                    max_price = {{ insurance[2]}},
+                                                                                                    discount = {{ insurance[4] }},
+                                                                                                    total_price = {{ (insurance[2] - insurance[4]) }},
+                                                                                                    sum_insure = {{ insurance[1] }},
+                                                                                                    brand = '{{ name[0] }}',
+                                                                                                    model = '{{ name[1] }}',
+                                                                                                    license = '{{ name[2] }}')">ต่ออายุ</button> 
+        </div>
+      </div>
+
+    {% endfor %} {% endif %}
+    </center>
+    <div style="margin-bottom: 50px;"></div>
+    <script>
+        window.addEventListener('load', (event) => {
+                load()
+                modal()
+                cartlist()
+            });
+
+    </script>
+{% endblock %}
+

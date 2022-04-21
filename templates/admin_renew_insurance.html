@@ -1,0 +1,74 @@
+{% extends "layout3.html" %}
+
+{% block title %}
+admin_renew_insurance
+{% endblock %}
+
+{% block main %}
+<div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+    <span class="head3" style="vertical-align: middle; ">ต่ออายุกรมธรรม์</span>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">รายละเอียดผู้ต่ออายุ</p>
+    </div>
+    <div class="box5" style="display: inline-block;">
+        <span class="head10">ชื่อ - นามสกุล: {{user_payment[0]}}{{user_payment[1]}}</span><br>
+        <span class="head10">เบอร์โทรศัพท์: {{user_payment[2]}}</span><br>
+        <span class="head10">อีเมล: {{user_payment[3]}}</span><br>
+    </div>
+    <a class="head4 underline" style="float: right; margin-right: 19px; margin-top: 123px;"
+        href="/user_detail">แก้ไข</a>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div>
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รายละเอียดรถ</p>
+        </div>
+        <div class="box22" style="display: inline-block;" id="renew_detail">
+
+        </div>
+    </div>
+</div>
+<div>
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">ยอดชำระ</p>
+    </div>
+    <div class="box5" style="display: inline-block;" id="payment_amount">
+
+    </div>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div style="line-height: 22px;">
+        <div class="box25" style="display: inline-block;">
+            <p class="head10">ชำระเงิน</p>
+        </div>
+        <div class="box24" style="display: inline-block;">
+            <div class="head10">ชื่อผู้โอน:</div><br>
+            <div class="head10">ธนาคารที่โอนเข้า:</div><br>
+            <div class="head10">จำนวนเงินที่โอน:</div><br>
+            <div class="head10">วันที่ชำระเงิน:</div><br>
+            <div class="head10">หลักฐานการโอนเงิน:</div><br>
+
+        </div>
+        <div class="box23" style="display: inline-block; text-align: left; margin-left: 6px;">
+            <div class="head10">{{user_payment[4]}}</div><br>
+            <div class="head10">{{user_payment[5]}}</div><br>
+            <div class="head10">{{user_payment[6]}}</div><br>
+            <div class="head10">{{user_payment[7]}}</div><br>
+            <div class="head10">
+                <img class="img8" style="max-width:70% !important;" src="/{{user_payment[8]}}">
+            </div><br>
+
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('load', (event) => {
+            get_admin_renew('{{payment_id}}')
+    });
+</script>
+{% endblock %}

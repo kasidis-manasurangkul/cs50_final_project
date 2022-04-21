@@ -1,0 +1,619 @@
+{% extends "layout2.html" %}
+
+{% block title %}
+admin_edit
+{% endblock %}
+{% block head %}รายละเอียดบัญชี{% endblock %}
+
+{% block main %}
+<div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'username')" id="defaultOpen">ผู้เอาประกัน</button>
+    {% for i in carlist %}
+        <button class="tablinks" onclick="openCity(event, {{i[0]}})">{{ i[1] }} {{ i[2] }} </button>
+    {% endfor %}
+    <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: 9px; margin-left: 5px;" id="opencreatecar" onclick="modal_edit1('createcar')">
+</div>
+<div class="modal-container" id="modal_container1createcar">
+    <div class="outmodal2" id="close2createcar"></div>
+    <div style="position: absolute;">
+        <div class="modal3" style="text-align: left; overflow: auto; width: 735px; height: 534px;">
+            <form action="/user_edit/car/create?user_id={{user[0]}}" name="clear" method="post">
+                <div class="box4" style="display: inline-block;">
+                    <p class="head10">เพิ่มรถยนต์</p>
+                </div>
+                <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important;">
+                    <label class="head10">ยี่ห้อ:</label>
+                    <input class="head13" style="border: 0.5px!;" name="brandcc" type="text" autofocus placeholder="เปลี่ยนยี่ห้อ"><br>
+                    <label class="head10" style="margin-right: 5px;">รุ่น:</label>
+                    <input class="head13" name="modelcc" type="text" autofocus placeholder="เปลี่ยนรุ่น"><br>
+                    <label class="head10">เลขทะเบียนรถ:</label>
+                    <input class="head13" name="license_numbercc" type="text" autofocus placeholder="เปลี่ยนเลขทะเบียนรถ"><br>
+                </div>
+                <div class="box4" style="display: inline-block; margin-top: -10px;">
+                    <p class="head10">เพิ่มประกันภัย</p>
+                </div>
+                <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important; margin-top: -10px;">
+                    <div id="parent_div">
+                        <div id="carin_creating">
+                            <label class="head10">ประเภทประกันภัย:</label>
+                            <input class="head13" name="type_createcar" type="text" autofocus placeholder="เพิ่มประเภทประกันภัย"><br>
+                            <label class="head10">วันที่คุ้มครอง: </label>
+                            <input class="head13" name="effective_date_createcar" type="text" autofocus placeholder="เพิ่มวันที่คุ้มครอง"><br>
+                            <label class="head10">ทุนประกัน:</label>
+                            <input class="head13" name="sum_insure_createcar" type="text" autofocus placeholder="เพิ่มทุนประกัน"><br>
+                            <label class="head10">เบี้ยประกัน:</label>
+                            <input class="head13" name="price_createcar" type="text" autofocus placeholder="เพิ่มเบี้ยประกัน"><br>
+                            <label class="head10">ส่วนลด:</label>
+                            <input class="head13" name="discount_createcar" type="text" autofocus placeholder="เพิ่มส่วนลด"><br><br>
+                        </div>
+                    </div>
+                    <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: -30px; margin-left: 324px;"
+                        onclick="clone('parent_div','carin_creating')">
+                </div>
+                <div style="text-align:center; margin-bottom: 19px; margin-top: 4px !important;">
+                    <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                        style="display: inline-block;">เสร็จสิ้น</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="tabcontent" id="username">
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">รายละเอียดผู้เอาประกัน</p>
+        <img src="/static/Edit_icon-icons.com_71853.png" alt="edit" class="img9 locate8" id="openuser" onclick="modal_edit1('user')">
+    </div>
+    <div class="box5" style="display: inline-block; width: 450px !important;">
+        <span class="head10">คำนำหน้า: {{user[6]}}</span><br>
+        <span class="head10" style="margin-right: 5px;">ชื่อ: {{user[7]}}</span>
+        <span class="head10">นามสกุล: {{user[8]}}</span><br>
+        <span class="head10">code: {{user[1]}}</span><br>
+        <span class="head10">เบอร์โทรศัพท์: {{user[2]}} </span><br>
+        <span class="head10">อีเมล: {{user[5]}} </span><br>
+        <span class="head10">username: {{user[3]}} </span><br>
+        <span class="head10">password: {{user[4]}} </span><br>
+        <span class="head10">สร้างโดย {{user[9]}}</span><br>
+        <span class="head10">แก้โดย: {{user[10]}} </span><br>
+        <span class="head10">วันที่สร้าง: {{user[11]}} </span><br>
+        <span class="head10">วันที่แก้ไขครั้งล่าสุด: {{user[12]}} </span><br>
+    </div>
+    <div class="modal-container" id="modal_container1user">
+        <div class="outmodal2" id="close2user"></div>
+        <div style="position: absolute;">
+            <div class="modal3" style="text-align: left;">
+                <form action="/user_edit/user/add?user_id={{user[0]}}" name="clear" method="post">
+                    <div class="box4" style="display: inline-block;">
+                        <p class="head10">รายละเอียดผู้เอาประกัน</p>
+                        <img src="/static/trash_bin_icon-icons.com_67981.png" style="max-width: 22px; margin-left: 70px;" alt="edit" class="img9 locate8" id="open2user" onclick="modal_edit2('user','',{{user[0]}})">
+                    </div>
+                    <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important;">
+                        <label class="head10">คำนำหน้า:</label>
+                        <input class= "head13" style="border: 0.5px!;" name="name_title" type="text" autofocus placeholder="เปลี่ยนคำหน้า"><br>
+                        <label class="head10" style="margin-right: 5px;">ชื่อ:</label>
+                        <input class= "head13" name="first_name" type="text" autofocus placeholder="เปลี่ยนชื่อ"><br>
+                        <label class="head10">นามสกุล:</label>
+                        <input class= "head13" name="last_name" type="text" autofocus placeholder="เปลี่ยนนามสกุล"><br>
+                        <label class="head10">code:</label>
+                        <input class= "head13" name="code" type="text" autofocus placeholder="เปลี่ยนcode"><br>
+                        <label class="head10">เบอร์โทรศัพท์: </label>
+                        <input class= "head13" name="phone_number" type="text" autofocus placeholder="เปลี่ยนเบอร์โทรศัพท์"><br>
+                        <label class="head10">อีเมล:</label>
+                        <input class= "head13" name="e_mail" type="text" autofocus placeholder="เปลี่ยนอีเมล"><br>
+                        <label class="head10">username:</label>
+                        <input class= "head13" name="username" type="text" autofocus placeholder="เปลี่ยนusername"><br>
+                        <label class="head10">password:</label>
+                        <input class= "head13" name="hash_password" type="text" autofocus placeholder="เปลี่ยนpassword"><br>
+                    </div>
+                    <div style="text-align:center; margin-bottom: 19px; margin-top: 4px !important;">
+                        <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                            style="display: inline-block;">เสร็จสิ้น</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container2" id="modal_container2user">
+        <div class="outmodal3" id="close2_1user"></div>
+        <div style="position: absolute;">
+            <div class="modal4" style="text-align: left;">
+                <form action="/user_edit/user/delete?user_id={{user[0]}}" method="post">
+                    <div class="head10" style="text-align: center; margin-bottom: 15px;">ยืนยันการลบข้อมูล</div>
+                    <div class="head13" style="text-align: center; margin-bottom: 16px;">หากคุณลบข้อมูลผู้เอาประกันออกข้อมูลทั้งหมดจะถูกลบออกด้วย คุณยังต้องการลบอยู่หรือไม่</div>
+                    <div style="text-align:center; margin-bottom: 18px; margin-top: 4px !important;">
+                        <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                            style="display: inline-block;">ตกลง</button>
+                        <button class="btn color-custom formbox7 head13 rounded2" style="margin-right: 5px;" id="close2_2user"
+                            style="display: inline-block;" type="button">ยกเลิก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr class="spliter1 my-0">
+    <div>
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รายละเอียดยอดชำระ</p>
+            <img src="/static/Edit_icon-icons.com_71853.png" alt="edit" class="img9 locate10" onclick="modal_edit1('pay')" id="open1pay"">
+        </div>
+        <div class="box5" style="display: inline-block; width: 500px !important;">
+            {% for payment in payments %}
+                <div style="margin-top: 10px;">
+                    <div class="box30" id="h{{payment[1][0][5]}}" onclick="expand({{payment[1][0][5]}})">
+                        <img  style="vertical-align: middle;" src="/static/icons8-expand-arrow-100.png" class="img10">
+                        <span class="head10 font-weight-bold">วันที่โอน: {{payment[1][0][3]}}</span>
+                    </div>
+                    <div style="margin-left: 32px; margin-top: 5px; display: none;" id="{{payment[1][0][5]}}">
+                        {% for car in payment[0] %}
+                            <div class="head10">ยี่ห้อ: {{car[0]}}</div>
+                            <div class="head10">รุ่น: {{car[1]}}</div>
+                            <div class="head10">เลขทะเบียนรถ: {{car[2]}}</div>
+                            <div class="head10">ประเภทประกันภัย: {{car[3]}}</div>
+                            <div class="head10">เบี้ยประกันรวม: {{car[4] - car[5]}}</div>
+                            <div class="head10">วันที่คุ้มครอง: {{car[6]}}</div><br>
+                            <hr class="spliter7">
+                        {% endfor %}
+                        <div class="head10">ชื่อผู้โอน: {{payment[1][0][0]}}</div>
+                        <div class="head10">ธนาคารที่โอนเข้า: {{payment[1][0][1]}}</div>
+                        <div class="head10">จำนวนเงินที่โอน: {{payment[1][0][2]}}</div>
+                        <div class="head10">วันที่โอน: {{payment[1][0][3]}}</div>
+                        <div class="head10">
+                            <span>หลักฐานการโอนเงิน:</span><br>
+                            <img class="img8" style="max-width:70% !important;" src="/{{payment[1][0][4]}}">
+                        </div>
+                        <br>
+                        <hr class="spliter4" style="margin-top: -11px; margin-left: -344px !important;">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="modal-container" id="modal_container1pay">
+            <div class="outmodal2" id="close2pay" onclick="location.reload();"></div>
+            <div style="position: absolute;">
+                <div class="modal3" style="text-align: left; overflow: auto; height: 900px; width: 946px;">
+                    <div class="box4" style="display: inline-block;">
+                        <p class="head10">รายละเอียดผู้เอาประกัน</p>
+                    </div>
+                    <div class="box5" style="display: inline-block; width: 620px !important; margin-left: 60px !important;">
+                        <form action="/user_edit/payment/create?user_id={{user[0]}}" method="post" enctype="multipart/form-data"
+                            name="clear">
+                            <div class="box30" style="width: 645px;">
+                                <div style="display: inline-block; width: 605px;">
+                                    <img style="vertical-align: middle;" src="/static/icons8-expand-arrow-100.png"
+                                        class="img10">
+                                    <span class="head10 font-weight-bold">เพิ่มยอดชำระ</span>
+                                </div>
+                            </div>
+                            <div style="margin-left: 35px; margin-top: 5px;">
+                                <label class="head10">ประกันภัยที่ชำระเงิน:</label>
+                                <div style="margin-bottom: 13px;">
+                                    {% for carin in carins %}
+                                    {% for i in carin %}
+                                    <input class="radio" style="margin-top: 7px; margin-right: 3px;" type="checkbox"
+                                        name="insurance{{i[13]}}" value="{{i[13]}}">
+                                    <label class="head10">{{carin[0][1]}} {{carin[0][2]}} | {{carin[0][3]}} | ประเภท{{i[4]}} |
+                                        วันที่{{i[5]}}</label><br>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <hr class="spliter7">
+                                <label class="head10">ชื่อผู้โอน:</label>
+                                <input required="required" class="head13" style="border: 0.5px!;" name="tranfer_name"
+                                    type="text" autofocus placeholder="เปลี่ยนชื่อผู้โอน"><br>
+                                <label class="head10" style="margin-right: 5px;">ธนาคารที่โอนเข้า:</label>
+                                <input required="required" class="head13" name="bank_account" type="text" autofocus
+                                    placeholder="เปลี่ยนธนาคารที่โอนเข้า"><br>
+                                <label class="head10">จำนวนเงินที่โอน:</label>
+                                <input required="required" class="head13" name="payment_amount" type="text" autofocus
+                                    placeholder="เปลี่ยนจำนวนเงินที่โอน"><br>
+                                <label class="head10">วันที่โอน:</label>
+                                <input required="required" class="head13" name="pay_date" type="text" autofocus
+                                    placeholder="เปลี่ยนวันที่โอน"><br>
+                                <div class="head10" style="margin-bottom: 20px;">
+                                    <span>หลักฐานการโอนเงิน:</span>
+                                    <input required="required" type="file" name="confirm_payment" id="realfilecreate" hidden>
+                                    <button type="button" class="btn color-custom formbox7 head6 rounded2" style="width: 123px;"
+                                        id="customfilecreate" onclick="file('create')">เปลี่ยนไฟล์...</button>
+                                    <span style="vertical-align: bottom; margin-left: 2px;"
+                                        id="customlabelcreate">(ยังไม่มีไฟล์ใดถูกเปลี่ยน)</span>
+                                    <br>
+                                    <img class="img8" style="max-width:70% !important;" src="" id="previewcreate">
+                                </div>
+                            </div>
+                            <div
+                                style="text-align:center; margin-bottom: 26px; margin-top: 48px !important; margin-left: 528px;">
+                                <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                                    style="display: inline-block;">บันทึก</button>
+                            </div>
+                        </form>
+                        {% for payment in payments %}
+                        <form action="/user_edit/payment/add?user_id={{user[0]}}&payment_id={{payment[1][0][5]}}" method="post"
+                            enctype="multipart/form-data" name="clear">
+                            <div class="box30" style="width: 645px;">
+                                <div style="display: inline-block; width: 605px;">
+                                    <img style="vertical-align: middle;" src="/static/icons8-expand-arrow-100.png"
+                                        class="img10">
+                                    <span class="head10 font-weight-bold">วันที่โอน: {{payment[1][0][3]}}</span>
+                                </div>
+                                <div style="display: inline-block; width: 30px;">
+                                    <img src="/static/trash_bin_icon-icons.com_67981.png"
+                                        style="max-width: 22px; margin-left: 0px; margin-top: -6px;" alt="edit"
+                                        class="img9 locate8" id="open2pay{{payment[1][0][5]}}"
+                                        onclick="modal_edit2('pay',{{payment[1][0][5]}},{{user[0]}})">
+                                </div>
+                            </div>
+                            <div style="margin-left: 35px; margin-top: 5px;">
+                                <label class="head10">ชื่อผู้โอน:</label>
+                                <input class="head13" style="border: 0.5px!;" name="tranfer_name" type="text" autofocus
+                                    placeholder="{{payment[1][0][0]}}"><br>
+                                <label class="head10" style="margin-right: 5px;">ธนาคารที่โอนเข้า:</label>
+                                <input class="head13" name="bank_account" type="text" autofocus
+                                    placeholder="{{payment[1][0][1]}}"><br>
+                                <label class="head10">จำนวนเงินที่โอน:</label>
+                                <input class="head13" name="payment_amount" type="text" autofocus
+                                    placeholder="{{payment[1][0][2]}}"><br>
+                                <label class="head10">วันที่โอน:</label>
+                                <input class="head13" name="pay_date" type="text" autofocus
+                                    placeholder="{{payment[1][0][3]}}"><br>
+                                <div class="head10" style="margin-bottom: 20px;">
+                                    <span>หลักฐานการโอนเงิน:</span>
+                                    <input type="file" name="confirm_payment" id="realfile{{payment[1][0][5]}}" hidden>
+                                    <button type="button" class="btn color-custom formbox7 head6 rounded2" style="width: 123px;"
+                                        id="customfile{{payment[1][0][5]}}"
+                                        onclick="file({{payment[1][0][5]}})">เปลี่ยนไฟล์...</button>
+                                    <span style="vertical-align: bottom; margin-left: 2px;"
+                                        id="customlabel{{payment[1][0][5]}}">(ยังไม่มีไฟล์ใดถูกเปลี่ยน)</span>
+                                    <br>
+                                    <img class="img8" style="max-width:70% !important;" src="/{{payment[1][0][4]}}"
+                                        id="preview{{payment[1][0][5]}}">
+                                </div>
+                            </div>
+                            <div
+                                style="text-align:center; margin-bottom: 26px; margin-top: 48px !important; margin-left: 528px;">
+                                <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                                    style="display: inline-block;" onclick="refresh()">บันทึก</button>
+                            </div>
+                        </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-container2" id="modal_container2pay">
+            <div class="outmodal3" id="close2_1pay"></div>
+            <div style="position: absolute;">
+                <div class="modal4" style="text-align: left;">
+                    <form action="" id="delete_pay" method="post">
+                        <div class="head10" style="text-align: center; margin-bottom: 15px;">ยืนยันการลบข้อมูล</div>
+                        <div class="head13" style="text-align: center; margin-bottom: 16px;">
+                            หากคุณลบข้อมูลรายละเอียดการชำระเงิน ข้อมูลจะถูกลบอย่างถาวร คุณยังต้องการลบอยู่หรือไม่</div>
+                        <div style="text-align:center; margin-bottom: 18px; margin-top: 4px !important;">
+                            <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                                style="display: inline-block;">ตกลง</button>
+                            <button class="btn color-custom formbox7 head13 rounded2" style="margin-right: 5px;" id="close2_2pay"
+                                style="display: inline-block;" type="button">ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for carin in carins %}
+<div class="tabcontent" id="{{carin[0][0]}}" name="spliter">
+    <div style="display: inline-block;">
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รถยนต์ของผู้เอาประกัน</p>
+            <img src="/static/Edit_icon-icons.com_71853.png" alt="edit" class="img9 locate9" id="open1insurance{{carin[0][0]}}" onclick="modal_edit1('car{{carin[0][0]}}')">
+        </div>
+        <div class="box5" style="display: inline-block;">
+            <div name="divs">
+                <div style="display: inline-block; ">
+                    <div class="head10">ยี่ห้อ: {{carin[0][1]}}</div>
+                    <div class="head10">รุ่น: {{carin[0][2]}}</div>
+                    <div class="head10">เลขทะเบียนรถ: {{carin[0][3]}} </div>
+                    <div class="head10">สร้างโดย {{carin[0][14]}}</div>
+                    <div class="head10">วันที่สร้าง: {{carin[0][15]}}</div>
+                    <div class="head10">แก้โดย: {{carin[0][16]}}</div>
+                    <div class="head10" style="margin-bottom: 40px;">วันที่แก้ไขครั้งล่าสุด: {{carin[0][17]}}</div>
+                    <hr class="spliter4" style="margin-left: -341px !important; margin-top: -21px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: inline-block;">
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">ประกันภัยของผู้เอาประกัน</p>
+            <img src="/static/Edit_icon-icons.com_71853.png" alt="edit" class="img9 locate9" id="open1insurance{{carin[0][0]}}" onclick="modal_edit1('insurance{{carin[0][0]}}')">
+            <img src="/static/4105962-add-expand-plus_113920 1.png" alt="edit" style="max-width: 22px;" class="img9 locate9" id="open1insurance{{carin[0][0]}}"
+                onclick="modal_edit1('createinsurance{{carin[0][0]}}')">
+        </div>
+        <div class="box5" style="display: inline-block;">
+            {% for i in carin %}
+            <div name="divs">
+                <div style="display: inline-block; ">
+                    <div class="head10">ประเภทประกันภัย: {{i[4]}} </div>
+                    <div class="head10">วันที่คุ้มครอง: {{i[5]}} </div>
+                    <div class="head10">ทุนประกัน: {{i[6]}} </div>
+                    <div class="head10">เบี้ยประกัน: {{i[7]}} </div>
+                    <div class="head10">ส่วนลด: {{i[8]}}</div>
+                    <div class="head10">สร้างโดย {{i[9]}}</div>
+                    <div class="head10">วันที่สร้าง: {{i[10]}}</div>
+                    <div class="head10">แก้โดย: {{i[11]}}</div>
+                    <div class="head10" style="margin-bottom: 40px;">วันที่แก้ไขครั้งล่าสุด: {{i[12]}}</div>
+                    <hr class="spliter4" style="margin-left: -341px !important; margin-top: -21px;">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="modal-container" id="modal_container1insurance{{carin[0][0]}}">
+        <div class="outmodal2" id="close2insurance{{carin[0][0]}}"></div>
+        <div style="position: absolute;">
+            <div class="modal3" style="text-align: left; overflow: auto; height: 900px; width: 750px;">
+                <div class="box4" style="display: inline-block;">
+                    <p class="head10">รายละเอียดผู้เอาประกัน</p>
+                </div>
+                <div class="box5" style="display: inline-block; width: 445px !important; margin-left: 60px !important;">
+                {% for i in carin %}
+                    <form action="/user_edit/insurance/add?user_id={{user[0]}}&insurance_id={{i[13]}}" name="clear" method="post">
+                        <div class="box30" style="width: 457px;">
+                            <div style="display: inline-block; width: 410px;">
+                                <img style="vertical-align: middle;" src="/static/icons8-expand-arrow-100.png" class="img10">
+                                <span class="head10 font-weight-bold">วันที่คุ้มครอง: {{i[5]}}</span>
+                            </div>
+                            <div style="display: inline-block; width: 25px;">
+                                <img src="/static/trash_bin_icon-icons.com_67981.png"
+                                    style="max-width: 22px; margin-left: 0px; margin-top: -6px;" alt="edit" class="img9 locate8"
+                                    id="open2insurance{{i[13]}}" onclick="modal_edit2('insurance',{{i[13]}},{{user[0]}})">
+                            </div>
+                        </div>
+                        <div style="margin-left: 34px; margin-top: 5px;">
+                            <label class="head10">ประเภทประกันภัย:</label>
+                            <input class="head13" name="type" type="text" autofocus placeholder="{{i[4]}}"><br>
+                            <label class="head10">วันที่คุ้มครอง: </label>
+                            <input class="head13" name="effective_date" type="text" autofocus placeholder="{{i[5]}}"><br>
+                            <label class="head10">ทุนประกัน:</label>
+                            <input class="head13" name="sum_insure" type="text" autofocus placeholder="{{i[6]}}"><br>
+                            <label class="head10">เบี้ยประกัน:</label>
+                            <input class="head13" name="price" type="text" autofocus placeholder="{{i[7]}}"><br>
+                            <label class="head10">ส่วนลด:</label>
+                            <input class="head13" name="discount" type="text" autofocus placeholder="{{i[8]}}"><br>
+                            <div style="text-align:center; margin-bottom: 56px; margin-top: 44px !important; margin-left: 285px;">
+                                <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                                    style="display: inline-block;">บันทึก</button>
+                            </div>
+                            <hr class="spliter4" style="margin-top: -40px; width: 721px; margin-left: -287px;">
+                        </div>
+                    </form>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container" id="modal_container1createinsurance{{carin[0][0]}}">
+        <div class="outmodal2" id="close2createinsurance{{carin[0][0]}}" onclick="insurance_refresh('{{carin[0][0]}}');"></div>
+        <div style="position: absolute;">
+            <div class="modal3" style="text-align: left; overflow: auto; height: 900px; width: 750px;">
+                <div class="box4" style="display: inline-block;">
+                    <p class="head10">รายละเอียดผู้เอาประกัน</p>
+                </div>
+                <div class="box5" style="display: inline-block; width: 445px !important; margin-left: 60px !important;">
+                    <div class="box30" style="width: 457px;">
+                        <div style="display: inline-block; width: 410px;">
+                            <img style="vertical-align: middle;" src="/static/icons8-expand-arrow-100.png" class="img10">
+                            <span class="head10 font-weight-bold">เพิ่มประกันภัย</span>
+                        </div>
+                    </div>
+                    <form>
+                        <div style="margin-left: 34px; margin-top: 5px;">
+                            <div id="insurance_parent{{carin[0][0]}}" >
+                                <div id="insertion_insurance_child{{carin[0][0]}}" name="insertion_insurance{{carin[0][0]}}" class="select_insurance{{carin[0][0]}}">
+                                    <label class="head10" style="margin-right: 5px;">ประเภทประกันภัย:</label>
+                                    <input class="head13" name="type{{carin[0][0]}}" type="text" autofocus placeholder="เพิ่มประเภทประกันภัย">
+                                    <img class="img11" onclick="del_insertion_insurance_clone('', '{{carin[0][0]}}');" src="/static/4105964-collapse-minus-reduce-remove_113927.png"
+                                        style="position: absolute; margin-top: 5px; margin-left: -436px;"><br>
+                                    <label class="head10" style="margin-right: 5px;">วันที่คุ้มครอง: </label>
+                                    <input class="head13" name="effective_date{{carin[0][0]}}" type="text" autofocus placeholder="เพิ่มวันที่คุ้มครอง"><br>
+                                    <label class="head10" style="margin-right: 5px;">ทุนประกัน:</label>
+                                    <input class="head13" name="sum_insure{{carin[0][0]}}" type="text" autofocus placeholder="เพิ่มทุนประกัน"><br>
+                                    <label class="head10" style="margin-right: 5px;">เบี้ยประกัน:</label>
+                                    <input class="head13" name="price{{carin[0][0]}}" type="text" autofocus placeholder="เพิ่มเบี้ยประกัน"><br>
+                                    <label class="head10" style="margin-right: 5px;">ส่วนลด:</label>
+                                    <input class="head13" name="discount{{carin[0][0]}}" type="text" autofocus placeholder="เพิ่มส่วนลด"><br><br>
+                                </div>
+                            </div>
+                            <img src="/static/4105962-add-expand-plus_113920 1.png" class="img9" style="margin-top: -30px; margin-left: 324px;"
+                                onclick="insertion_insurance_clone('{{carin[0][0]}}')">
+                            <div style="text-align:center; margin-bottom: 56px; margin-top: 44px !important; margin-left: 285px;">
+                                <button class="btn color-custom formbox7 head13 rounded2" type="button" id="close1createinsurance{{carin[0][0]}}"
+                                    style="display: inline-block;" onclick="get_insertion_insurance('{{carin[0][0]}}'); modal_editsp('createinsurance{{carin[0][0]}}');">บันทึก</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container" id="modal_container1car{{carin[0][0]}}">
+        <div class="outmodal2" id="close2car{{carin[0][0]}}"></div>
+        <div style="position: absolute;">
+            <div class="modal3" >
+                <form action="/user_edit/car/add?user_id={{user[0]}}&car_id={{carin[0][0]}}" method="post" name="clear">
+                    <div class="box4" style="display: inline-block;">
+                        <p class="head10">รายละเอียดผู้เอาประกัน</p>
+                        <img src="/static/trash_bin_icon-icons.com_67981.png" style="max-width: 22px; margin-left: 67px; margin-top: -100px;"
+                            alt="edit" class="img9 locate8" id="open2car{{carin[0][0]}}"
+                            onclick="modal_edit2('car',{{carin[0][0]}},{{user[0]}})">
+                    </div>
+                    <div class="box5" style="display: inline-block; width: 427px !important; margin-left: 60px !important;">
+                        <label class="head10">ยี่ห้อ:</label>
+                        <input class="head13" style="border: 0.5px!;" name="brand" type="text" autofocus
+                            placeholder="{{carin[0][1]}}"><br>
+                        <label class="head10" style="margin-right: 5px;">รุ่น:</label>
+                        <input class="head13" name="model" type="text" autofocus placeholder="{{carin[0][2]}}"><br>
+                        <label class="head10">เลขทะเบียนรถ:</label>
+                        <input class="head13" name="license_number" type="text" autofocus placeholder="{{carin[0][3]}}"><br>
+                    </div>
+                    <div style="text-align:center; margin-bottom: 19px; margin-top: 4px !important;">
+                        <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                            style="display: inline-block;">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+<div class="modal-container2" id="modal_container2insurance">
+    <div class="outmodal3" id="close2_1insurance"></div>
+    <div style="position: absolute;">
+        <div class="modal4" style="text-align: left;">
+            <form action="" id="delete_insurance" method="post">
+                <div class="head10" style="text-align: center; margin-bottom: 15px;">ยืนยันการลบข้อมูล</div>
+                <div class="head13" style="text-align: center; margin-bottom: 16px;">
+                    ข้อมูลรายละเอียดรถยนต์และประกันภัยจะถูกลบแบบถาวร คุณยังต้องการลบอยู่หรือไม่</div>
+                <div style="text-align:center; margin-bottom: 18px; margin-top: 4px !important;">
+                    <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                        style="display: inline-block;">ตกลง</button>
+                    <button class="btn color-custom formbox7 head13 rounded2" style="margin-right: 5px;"
+                        id="close2_2insurance" style="display: inline-block;" type="button">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal-container2" id="modal_container2car">
+    <div class="outmodal3" id="close2_1car"></div>
+    <div style="position: absolute;">
+        <div class="modal4" style="text-align: left;">
+            <form action="" id="delete_car" method="post">
+                <div class="head10" style="text-align: center; margin-bottom: 15px;">ยืนยันการลบข้อมูล</div>
+                <div class="head13" style="text-align: center; margin-bottom: 16px;">
+                    ข้อมูลรายละเอียดรถยนต์และประกันภัยจะถูกลบแบบถาวร คุณยังต้องการลบอยู่หรือไม่</div>
+                <div style="text-align:center; margin-bottom: 18px; margin-top: 4px !important;">
+                    <button class="btn color-custom formbox7 head13 rounded2" type="submit"
+                        style="display: inline-block;">ตกลง</button>
+                    <button class="btn color-custom formbox7 head13 rounded2" style="margin-right: 5px;"
+                        id="close2_2car" style="display: inline-block;" type="button">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace("active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("defaultOpen").click();
+
+    function modal_edit1(id) {
+        openid = "open1" + id
+        modal_containerid = "modal_container1" + id
+        close1id = "close1" + id
+        close2id = "close2" + id
+        const open = document.getElementById(openid);
+        const modal_container = document.getElementById(modal_containerid);
+        const close2 = document.getElementById(close2id);
+
+        modal_container.classList.add("show");
+        close2.addEventListener("click", function () {
+            modal_container.classList.remove("show");
+            forms = document.getElementsByTagName('form')
+            for (i = 0; i < forms.length; i++) {
+                forms[i].reset()
+            // location.reload();
+            }
+            });
+        }
+    function modal_editsp(id) {
+        modal_containerid = "modal_container1" + id
+        close1id = "close1" + id
+        const modal_container = document.getElementById(modal_containerid);
+        const close1 = document.getElementById(close1id);
+
+        modal_container.classList.remove("show");
+        forms = document.getElementsByTagName('form')
+        for (i = 0; i < forms.length; i++) {
+            forms[i].reset()
+            // location.reload();
+        }
+    }
+    function modal_edit2(type,specific_id,user_id) {
+        openid = "open2" + type + specific_id;
+        modal_containerid = "modal_container2" + type;
+        close1id = "close2_1" + type;
+        close2id = "close2_2" + type;
+        const open = document.getElementById(openid);
+        const modal_container = document.getElementById(modal_containerid);
+        const close1 = document.getElementById(close1id);
+        const close2 = document.getElementById(close2id);
+
+        modal_container.classList.add("show");
+        if (type == 'pay'){
+            array = ['/user_edit/payment/delete?user_id=',user_id,'&payment_id=',specific_id].join('')
+            document.getElementById("delete_pay").action = array;
+        }
+        if (type == 'car'){
+            array = ['/user_edit/car/delete?user_id=', user_id, '&car_id=', specific_id].join('')
+            document.getElementById("delete_car").action = array;
+        }
+        if (type == 'insurance'){
+            array = ['/user_edit/insurance/delete?user_id=', user_id, '&insurance_id=', specific_id].join('')
+            document.getElementById("delete_insurance").action = array;
+        }
+        close1.addEventListener("click", function () {
+            modal_container.classList.remove("show");
+        });
+        close2.addEventListener("click", function () {
+            modal_container.classList.remove("show");
+        });
+    }
+
+    function file(id){
+        let realfile_id = "realfile" + id;
+        let customfile_id = "customfile" + id;
+        let customlable_id = "customlabel" + id;
+        let preview_id = "preview" + id;
+
+        const realfile = document.getElementById(realfile_id);
+        const customfile = document.getElementById(customfile_id);
+        const customlabel = document.getElementById(customlable_id);
+        const preview = document.getElementById(preview_id);
+        realfile.click();
+
+        realfile.addEventListener('change', function(){
+            const file = realfile.files[0];
+            console.log(file)
+            if (realfile.value) {
+                customlabel.innerHTML = realfile.value.match(
+                    /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                )[1];
+                const reader = new FileReader();
+                reader.addEventListener('load', function () {
+                    preview.setAttribute("src", this.result);
+                })
+
+                reader.readAsDataURL(file);
+            }
+
+            else {
+                customlabel.innerHTML = "(ยังไม่มีไฟล์ใดถูกเปลี่ยน)";
+            }
+        })
+    }
+</script>
+{% endblock %}

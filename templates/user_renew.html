@@ -1,0 +1,116 @@
+{% extends "layout3.html" %}
+
+{% block title %}
+user_renew
+{% endblock %}
+
+{% block main %}
+<div class="box15" style="margin-left: auto; margin-right: auto; text-align: center;">
+    <span class="head3" style="vertical-align: middle; ">ต่ออายุกรมธรรม์</span>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">รายละเอียดผู้ต่ออายุ</p>
+    </div>
+    <div class="box5" style="display: inline-block;">
+        <span class="head10">ชื่อ - นามสกุล: {{username[0]}} {{username[1]}}</span><br>
+        <span class="head10">เบอร์โทรศัพท์: {{username[2]}}</span><br>
+        <span class="head10">อีเมล: {{username[3]}}</span><br>
+    </div>
+    <a class="head4 underline" style="float: right; margin-right: 19px; margin-top: 123px;" href="/user_detail">แก้ไข</a>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div>
+        <div class="box4" style="display: inline-block;">
+            <p class="head10">รายละเอียดรถ</p>
+        </div>
+        <div class="box22" id="renew_detail" style="display: inline-block;">
+    
+        </div>
+    </div>
+</div>
+<div>
+    <div class="box4" style="display: inline-block;">
+        <p class="head10">ยอดชำระ</p>
+    </div>
+    <div class="box5" style="display: inline-block;"  id= "payment_amount">
+
+    </div>
+</div>
+<hr class="spliter1 my-0">
+<div>
+    <div>
+        <div class="box25" style="display: inline-block;">
+            <p class="head10">ชำระเงิน</p>
+        </div>
+        <div class="box24" style="display: inline-block;">
+            <div class="head10">ชื่อผู้โอน:</div><br>
+            <div class="head10">ธนาคารที่โอนเข้า:</div><br>
+            <div class="head10" style= "margin-top: 50px;">จำนวนเงินที่โอน:</div><br>
+            <div class="head10">หลักฐานการโอนเงิน:</div><br>
+
+        </div>
+        <div class="box23" style="display: inline-block;">
+            <form action="/user_renew" method="post" enctype = "multipart/form-data">
+                <input required="required" type="text" id="name" name="name" class="head10 formbox3" placeholder="ชื่อผู้โอน"><br><br> 
+                <input required="required" type="radio" class="radio" id="bank" name="bank" value="124-4-20856-5" class="head10">
+                <img src="/static/BBL-LOGO 1.png" class="img7" style="display: inline-block;">
+                <label  class="head10" style="margin-top: -10px; display: inline-block; line-height: 29px;">
+                    ธ กรุงเทพ สาขา ลุมพินี<br>
+                    ชื่อบัญชี บมจ.วิริยะประกันภัย<br>
+                    หมายเลขที่บัญชี 124-4-20856-5<br>
+                </label>
+                <input required="required" type="text" id="amount" name="amount" class="head8 formbox3" style="margin-top: 19px;"placeholder="0.00 บาท"><br><br>
+                <input required="required" type="file" name="filename" id="real_file" hidden>
+                <button type="button" class="btn color-custom formbox7 head6 rounded2" id="custom_file">เพิ่มไฟล์...</button>
+                <span style="vertical-align: bottom; margin-left: 2px;" id="custom_label">(ไม่มีไฟล์ถูกเลือก)</span>
+                <img src="" class= "img8" id="preview" style="display: none;">
+                <div class="locate3">
+                    <button class="btn color-custom formbox8 head5 rounded2" style="margin-right: 5px;" onclick="history.go(-1)" style="display: inline-block;">ยกเลิก</button>
+                    <button class="btn color-custom formbox8 head5 rounded2" type="button" style="display: inline-block;" onclick="post()">เสร็จสิ้น</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('load', (event) => {
+        renew()
+    });
+    const realfile = document.getElementById("real_file");
+    const customfile = document.getElementById("custom_file");
+    const customlabel = document.getElementById("custom_label");
+    const preview = document.getElementById("preview")
+
+    customfile.addEventListener("click", function () {
+        realfile.click();
+    });
+
+    realfile.addEventListener("change", function () {
+        const file = this.files[0];
+        if (realfile.value) {
+            customlabel.innerHTML = realfile.value.match(
+                /[\/\\]([\w\d\s\.\-\(\)]+)$/
+            )[1];
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+                preview.setAttribute("src", this.result);
+            })
+
+            reader.readAsDataURL(file);
+
+            preview.style.display = "block"
+        } 
+        
+        else {
+            customlabel.innerHTML = "(ไม่มีไฟล์ถูกเลือก)";
+            preview.style.display = null;
+        }
+    });
+
+
+
+</script>
+{% endblock %}
